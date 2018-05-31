@@ -1,0 +1,49 @@
+{
+  "name": "react-native-socket-io-example",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "ios": "react-native run-ios",
+    "android": "react-native run-android",
+    "server": "nodemon server"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^6.3.1",
+    "axios": "^0.18.0",
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.14.0",
+    "express-jwt": "^5.3.1",
+    "global": "^4.3.2",
+    "jsonwebtoken": "^8.2.1",
+    "moment": "^2.22.1",
+    "mongojs": "^2.5.0",
+    "mongoose": "^5.0.17",
+    "native-base": "^2.4.3",
+    "nodemon": "^1.17.4",
+    "react": "16.3.1",
+    "react-devtools": "^3.2.1",
+    "react-native": "0.55.3",
+    "react-native-gifted-chat": "^0.4.3",
+    "react-native-git-upgrade": "^0.2.7",
+    "react-native-storage": "^0.2.2",
+    "react-native-vector-icons": "^4.6.0",
+    "react-navigation": "^1.5.1",
+    "socket.io": "^1.7.2",
+    "upgrade": "^1.1.0"
+  },
+  "devDependencies": {
+    "babel-jest": "18.0.0",
+    "babel-preset-react-native": "1.9.1",
+    "jest": "18.0.0",
+    "react-test-renderer": "15.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "main": "index.js",
+  "license": "MIT"
+}

@@ -1,0 +1,363 @@
+await 
+        router.post('/Auth/user', async (req, res) => {
+            const body = req.body;
+            let user = await User.findOne({ email: body.email }).catch(err => {
+                //res.status(500);
+                res.json('error database');
+            });
+
+            if (user === undefined || user === null) return res.json('úser tidak valid');
+            let isFound = await bcrypt.compare(body.password, user.password).catch(err => {
+                //res.status(403);
+                res.json('error compare');
+            });
+
+            if (! isFound) return res.json({status: false, message: 'user tidak ditemukan'});
+            const token = jwt.sign({user}, 's4mb4l01@d0');
+            res.json({ status: true, token, user});
+        });
+
+api apaan ini cek token dan await
+
+      // router.post('/Auth/user',  //await
+       //      function(req, res){
+       //           const body = req.body;
+       //              User.findOne({ email: body.email },
+       //                  function(err, email, exist){
+       //                      if( email == exist ) {
+       //                          res.sendStatus(403);
+       //                          console.log('data tidak di temukan')
+       //                      }else{
+       //                          // res.sendStatus(200);
+       //                          const token = jwt.sign({ email }, 's4mb4l01@d0');
+       //                           console.log(email)
+       //                           res.json({
+       //                              email, token
+       //                           })
+       //                      }
+
+       //                  })
+       //              // )
+       //      })
+
+//get token user dan memastikan dari user ada apa gak\\\
+ //    router.get('/user/Auth', ensureToken, function(req, res) {
+ //        jwt.verify(req.token, 's4mb4l01@d0', function(err, user) {
+ //            if (err) {
+ //                res.sendStatus(403);
+ //            } else {
+ //                res.json({
+ //                    description: 'Protected information. success!',
+ //                        success : 'true',
+ //                    user
+ //                });
+ //            }
+ //        });
+ //    });
+ 
+ // //memastikan token ada apa gak\\\\
+ //    function ensureToken(req, res, next) {
+ //        //get auth header value\\
+ //      const bearerHeader = req.headers["authorization"];
+ //      //check is bearer is undefined\\
+ //      if (typeof bearerHeader !== 'undefined') {
+ //         //split at space\\
+ //        const bearer = bearerHeader.split(" ");
+ //        //get token from array\\
+ //        const bearerToken = bearer[1];
+ //                //set the token \\
+ //        req.token = bearerToken;
+ //        //next midlleware\\
+ //        next();
+ //      } else {
+ //        res.sendStatus(403);
+ //      }
+ //    }
+
+          //get token user dan memastikan dari user ada apa gak\\\
+        // router.post('/Auth/user/:email',
+        //     function(req, res){
+        //          // const body = req.body;
+        //          const email = req.params.email
+        //          // console.log(email)
+        //             User.findOne({ email: email },
+        //                 console.log('hasil dari email' + email), 
+        //                 // 
+        //                 // jwt.verify(req.token, 's4mb4l01@d0',
+        //                 function(err, user, exist){
+        //                     if( user == exist ) {
+        //                         res.sendStatus(403);
+        //                         console.log('data tidak di temukan')
+        //                     }else{
+        //                         // res.sendStatus(200);
+        //                         const token = jwt.sign({ user }, 's4mb4l01@d0');
+        //                          console.log('hasil dari :' +user + token)
+        //                             res.json({
+        //                                 email, 
+        //                                 // token
+        //                             })
+        //                     }
+
+        //                 })
+        //         // next();
+        //     })
+
+
+// var jwt = require('express-jwt');
+
+// router.get('/api', function (req, res){
+//     res.json({
+//         text: 'api'
+//     })
+// })
+// router.post('/api/login', function(req, res){
+//     //auth user
+//     const user = {id : 3};
+//     const token = jwt.sign({ user }, 'my_secret_key');
+//     res.json({
+//         token : token
+//     });
+// });
+// router.get('/api/protected', function(req, res){
+//     jwt.verify(req.token, 'my_secret_key', function(err, data){
+//         if(err){
+//             res.sendStatus(403);
+//         }else{
+//            res.json({
+//                 text : 'protected',
+//                 data:data
+//             }) 
+//         }
+//     }); 
+// });
+
+// function ensureToken(req, res, next){
+//     const bearerHeader = req.headers["authorization"];
+//     if (typeof bearerHeader !== 'undefined'){
+//         const bearer = bearerHeader.split(" ");
+//         const bearerToken = bearer[1];
+//             req.token = bearerToken;
+//             next();
+//     } else {
+//         res.sendStatus(403)
+//     }
+// }
+
+// router.post('/Login', (req, res) => {
+//     const body = req.body;
+//     User.findOne({email: body.email, password: body.password}, null, function (err, user) {
+//         if (err) res.json({text: "gagal login"});
+//         else {
+//             const token = jwt.sign({ user }, 's4mb4l01');
+//             res.json({token, user});
+//         }
+//     });
+// });
+
+
+
+
+
+//coba2
+router.post('/User/Login', (req, res) => {
+    const body = req.body;
+    const saltRounds = 10;
+    const myPlaintextPassword = 's0/\/\P4$$w0rD';
+    const someOtherPlaintextPassword = 'not_bacon';
+        bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+            
+        });
+            User.findOne({email: body.email}, (err, user) => {
+            if (err) return console.error(err);
+            if (user) return res.json({text: 'user sudah diinput'});
+                //sama denngan else\\
+            User.create({ email: body.email, password: body.password }, (err, user) => {
+                if (err) return console.error(err);
+                    const token = jwt.sign({ user }, 's4mb4l01@d0');
+                res.json({
+                    token,
+                    user
+                });
+            });
+    });
+});
+
+//log out
+router.post('/sigup', function(req, res){
+bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+  console.log(hash)
+});
+})
+
+
+
+
+///format token\\\\
+// authorixaion = accrs token
+//verikasi
+// function verifyToken(req, res, next){
+//     //get header value
+//     const bearerHeader = req.headers['authorization'];
+//     //cek bearer 
+//     if(typeof bearerHeader !== 'undefined') {
+//         //split at space
+//         const bearer = bearerHeader.split(' ');
+//         //get token from array
+//         const bearerToken = bearer[1];
+//         //set the token
+//         req.token = bearerToken;
+//         //next middleware
+//         next();
+//     }else{
+//         res.sendStatus(403);
+//     }
+// }
+
+
+
+hash bycrypt ini
+// // module.exports = mongoose.model('User', UserSchema);  
+// //authenticate input against database
+// UserSchema.statics.authenticate = function (email, password, callback) {
+//   User.findOne({ email: email })
+//     .exec(function (err, user) {
+//       if (err) {
+//         return callback(err)
+//       } else if (!user) {
+//         var err = new Error('User not found.');
+//         err.status = 401;
+//         return callback(err);
+//       }
+//       bcrypt.compare(password, user.password, function (err, result) {
+//         if (result === true) {
+//           return callback(null, user);
+//         } else {
+//           return callback();
+//         }
+//       })
+//     });
+// }
+
+// //hashing a password before saving it to the database
+// UserSchema.pre('save', function (next) {
+//   var user = this;
+//   bcrypt.hash(user.password, 10, function (err, hash) {
+//     if (err) {
+//       return next(err);
+//     }
+//     user.password = hash;
+//     next();
+//   })
+// });
+
+
+// var User = mongoose.model('User', UserSchema);
+// module.exports = User;
+
+
+
+// var mongoose = require('mongoose');
+// var Schema = mongoose.Schema;
+// var options = { new: true }; 
+// const bcrypt = require('bcrypt');
+
+
+// UserSchema = new Schema({
+//     email :  {
+//        type: String,
+//        // require: true,
+//        // match: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+//    },
+//     password : {
+//        type: String,
+//        required: true,
+//        // match: /(?=.*[a-zA-Z])(?=.*[0-9]+).*/,
+//        // minlength: 12
+//    }
+// });
+
+// UserSchema.methods.passwordIsValid = function (password) {
+//    try {
+//        return bcrypt.compareAsync(password, this.password);
+//    }
+//    catch (err) {
+//        throw err;
+//    }
+// };
+// module.exports = mongoose.model('User', UserSchema);
+
+
+///,mentahan
+
+
+router.get('/User/:id', function(req, res){
+        User.findOne({_id: req.params.id}, null, function (err, user) {
+            if (err) return console.error(err);
+            const token = jwt.sign({ user }, 's4mb4l01@d0');
+                res.json({
+                    token : token , 
+                    user
+                });
+        });
+});
+
+
+////\\\\\\\\\\\\\
+router.get('/User/Auth', VerifyToken, function(req, res, next){
+        User.findOne({_id: req.params.id}, null, function (err, user) {
+            if (err) return console.error(err).send("msalah mngintai user..");
+            if (!user) return res.status(404).send("tidak ada user");
+            // const token = jwt.sign({ user }, 's4mb4l01@d0');
+                res.status(200).send({token,user});
+        });
+});
+//////contoh
+//contoh\\\
+// router.get('/User/login', VerifyToken, function(req, res, next) {
+//   User.findById(req.userId, { password: 0 }, function (err, user) {
+//     if (err) return res.status(500).send("There was a problem finding the user.");
+//     if (!user) return res.status(404).send("No user found.");
+//     res.status(200).send(user);
+//   });
+// });
+
+
+//hasil get mentahan
+        //memastikan token ada apa gak\\\\
+    function ensureToken(req, res, next) {
+        //get auth header value\\
+        const bearerHeader = req.headers["authorization"];
+        //check is bearer is undefined\\
+            if (typeof bearerHeader !== 'undefined') {
+                //split at space\\
+            const bearer = bearerHeader.split(" ");
+            //get token from array\\
+        const bearerToken = bearer[1];
+        //set the token \\
+            req.token = bearerToken;
+            //next midlleware\\
+        next();
+      } else {
+        //kirim status (token valid"403")\\
+            res.sendStatus(403);
+      }
+    }
+
+router.post('/User/Auth', function(req, res){
+        const body = req.body;
+            User.findOne({
+                email: body.email,
+                password: body.password
+            },  function(err, user){
+                    if(err) 
+                        return 
+                            console.log(err);
+                            const token = jwt.sign({ user }, 's4mb4l01@d0');
+
+                            // User.create({
+                            //     // token : token,
+                            //     email : body.email,
+                            //     password: body.password
+                            // })
+            })
+    })
